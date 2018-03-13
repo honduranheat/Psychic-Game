@@ -2,9 +2,7 @@
 
 //Comments
 // I had to set lives == -1 or else it wouldnt count down properly. Dont know why.
-// After resetGlobalBariables runs, the mouse needs to be clicked an extra time to run the game again. I couldnt figure out how to just make it restart
-// automatically. 
-// The guesslog shows the comma before the letter in the browser
+// The guesslog shows the comma before the letter in the browser, and it also logs the last click in the previous game.
 //=======================================================================================================
 
 
@@ -32,7 +30,7 @@ var output = document.querySelector(".highLow");
 
 
 
-
+console.log(computerPick);
 
 
 
@@ -59,41 +57,38 @@ function playGame() {
         guessLog.push(userGuess);
         alreadyGuessed.innerHTML = "Your guesses so far: " + guessLog;   
         console.log(guessLog);
-    } else if (userGuess == computerPick) {
+    } 
+    
+    
+    if (userGuess == computerPick) {
         gameWon = true;
+        winTotal+1;
+        alert("You win! HIP-HIP-HOORAY! WHOOPIE! YAAAAaay...alright....cool...awesome..............");
         endGame();
-    }
-
+    } 
     
     if (lives == -1) { 
+        alert("You lose. The letter was " + computerPick);
+        lossTotal++;
         endGame();
     }
 
     function endGame() {
-        if (gameWon) {
-            alert("You win! HIP-HIP-HOORAY! WHOOPIE! YAAAAaay...alright....cool...awesome..............");
-            winTotal++;
-            resetGlobalVariables();
-            
-        } else {
-            alert("You lose. The letter was " + computerPick);
-            lossTotal++;
-            resetGlobalVariables(); 
-        }
+            resetGlobalVariables();    
     }
 
 
 
 
     function resetGlobalVariables() {
-        playGame();
+        
         lives = 10;
         guessesMade = 0;
         computerPick = computerChoices[Math.floor(Math.random() * computerChoices.length)];
         wordsToLiveBy = encouragement[Math.floor(Math.random() * encouragement.length)];
-        gameWon = false;
+        gameWon=false;
         guessLog = [];
-       
+        playGame();
     }
     
 }
